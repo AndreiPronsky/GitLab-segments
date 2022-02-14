@@ -36,11 +36,15 @@ class Segment {
 
     Point intersection(Segment another) {
         double d = ((this.startX-this.endX) * (another.startY-another.endY) - (this.startY-this.endY) * (another.startX-another.endX));
-        double intersX = ((this.startX*this.endY-this.startY*this.endX) * (another.startX-another.endX) - (this.startX-this.endX) * (another.startX*another.endY-another.startY*another.endX)) / d;
-        double intersY = ((this.startX*this.endY-this.startY*this.endX) * (another.startY-another.endY) - (this.startY-this.endY) * (another.startX*another.endY-another.startY*another.endX)) / d;
-        if((Math.min(this.startX, this.endX)) <= intersX && intersX <= (Math.max(this.startX, this.endX)) && (Math.min(another.startX,another.endX)) <= intersX && intersX<= (Math.max(another.startX,another.endX))) {
+        double v = another.startX * another.endY - another.startY * another.endX;
+        double w = this.startX*this.endY-this.startY*this.endX;
+        double intersX = (w * (another.startX-another.endX) - (this.startX-this.endX) * v) / d;
+        double intersY = (w * (another.startY-another.endY) - (this.startY-this.endY) * v) / d;
+        if((Math.min(this.startX, this.endX)) <= intersX && intersX <= (Math.max(this.startX, this.endX))
+                && (Math.min(another.startX,another.endX)) <= intersX && intersX<= (Math.max(another.startX,another.endX))) {
             return new Point(intersX, intersY);
         }
         else{ return null;}
     }
+
 }
